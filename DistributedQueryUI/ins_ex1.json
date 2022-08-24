@@ -1,0 +1,6 @@
+{
+	"name" : "ins",
+	"fullName" : "Insurance",
+	"owner" : "I",
+	"attributes" : ["C", "P"]
+}

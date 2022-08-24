@@ -1,0 +1,11 @@
+[
+	{
+		"conf_name" : "Esempio 1",
+		"tables" : [
+			{"table_file" : "hosp_ex1.json", "auth_file" : "auth_hosp_ex1.json" },
+			{"table_file" : "ins_ex1.json", "auth_file" : "auth_ins_ex1.json" }
+		],
+		"priority_file" : "priority_ex1.json",
+		"query_file" : "queryplan_ex1.json"
+	}
+]

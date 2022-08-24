@@ -1,0 +1,6 @@
+{
+	"name" : "hosp",
+	"fullName" : "Hospital",
+	"owner" : "H",
+	"attributes" : ["S", "B", "D", "T"]
+}
