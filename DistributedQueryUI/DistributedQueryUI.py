@@ -4,6 +4,7 @@ import queryplan
 import json
 import utils
 import sys
+import os
 
 #Step 0: Inizializzazione
 lista_tab_json = []
@@ -67,55 +68,82 @@ qp.esegui_step_rec(1, True)
 qp.esegui_step_rec(1, False)
 
 #Step 3: Output
-print("\n============================\n\tOUTPUT\n============================\n\n")
 lista_ocd = qp.get_ocd()
 lista_asc = qp.get_asc()
+html_albero = ""
+html_ls_nodi = ""
+html_kes = ""
 
 for i in range(1, qp.get_num_nodi()+1):
+	
+	html_ls_nodi += (", " if i != 1 else "") + "node" + str(i)
+
+	html_nodo = ""
 	nodo = qp.get_nodo(i)
 	vp, ve, ip, ie, eq, cand, assegn, operazione, attributi, operandi, dett_op = nodo.get_profilo()
-	print("Node: " + str(i))
+	html_nodo += "node" + str(i) + " = {\n"
+	html_nodo += "parent: node" + str(nodo.id_padre) + "," if i != 1 else ""
+	html_nodo += "innerHTML : \"<p cass='op'><b>Operation:</b><br/>"
 	
 	
 	#Parti di output generate in base al tipo di operazione
 	if operazione == "gby":
-		print("-> Operation: " + dett_op + " on " + str(operandi).replace("'", "") + ", grouping", end='')
+		html_nodo += dett_op + " on " + str(operandi).replace("'", "") + ", grouping"
 	else:
-		print("-> Operation: " + utils.ope_name[operazione], end='')
+		html_nodo += utils.ope_name[operazione]
 
 	if operazione != "base":
-		print(" on " + str(attributi).replace("'", ""), end='')
+		html_nodo += " on " + str(attributi).replace("'", "")
 
 	else:
-		print(" " + names_set[list(operandi)[0]], end='')
+		html_nodo += " " + names_set[list(operandi)[0]]
 	
-	print("")
+	html_nodo += "</p>"
 
 	if operazione != "base" and not qp.is_proj_after_base(i):
-		print("-> Candidates: " + str(cand).replace("'", ""))
+		html_nodo += "<p class='cand'><b>Candidates:</b> " + str(cand).replace("'", "") + "</p>"
 
-	print("-> Assignee: " + assegn)
+	html_nodo += "<p class='as'><b>Assignee:</b> " + assegn + "</p>"
+
 	#Parti di output generate in base all'eventuale cifratura
+	head_printed = False
 	for ocd in lista_ocd:
 		if i == ocd["figlio"] and ocd["tipo_op"] == "C":
-			print("-> Encryption of " + str(ocd["adc"]).replace("'", ""))
+
+			if not head_printed:
+				html_nodo += "<p class='enc'><b>Encryption/Decryption</b><br />"
+				head_printed = True
+			html_nodo += "Encryption of " + str(ocd["adc"]).replace("'", "") + "</p>"
 
 		if i == ocd["padre"] and ocd["tipo_op"] == "D":
-			print("-> Decryption of " + str(ocd["adc"]).replace("'", ""))
 
-	print("\n\tvp: " + str(list(vp)).replace("'", "") + "\n\tve: " + str(list(ve)).replace("'", "") + "\n\tip: " + str(list(ip)).replace("'", "") + "\n\tie: " + str(list(ie)).replace("'", "") + "\n\teq: " + str(list(eq)).replace("'", ""))
+			if not head_printed:
+				html_nodo += "<p class='enc'><b>Encryption/Decryption</b><br />"
+				head_printed = True
+			html_nodo += "Decryption of " + str(ocd["adc"]).replace("'", "") + "</p>"
 
-	print("\n=====================\n")
+	html_nodo += "<p class='prof'><b>Profile</b><br/>"
+	html_nodo += "<i>vp</i>: " + str(list(vp)).replace("'", "") + "&nbsp;&nbsp;&nbsp;&nbsp;<i>ve</i>: " + str(list(ve)).replace("'", "") + "<br/>"
+	html_nodo += "<i>ip</i>: " + str(list(ip)).replace("'", "") + "&nbsp;&nbsp;&nbsp;&nbsp;<i>ie</i>: " + str(list(ie)).replace("'", "") + "<br/>"
+	html_nodo += "<i>eq</i>: " + str(list(eq)).replace("'", "") + "</p>"
 
+	html_nodo += "\"\n};\n\n"
+	html_albero += html_nodo
 
-
-#print("=== ENCRYPTION OPERATIONS ===")
-#for ocd in lista_ocd: 
-#	print("\n-> " + ("Encryption of " if ocd["tipo_op"] == "C" else "Decryption ") + "" + str(ocd["adc"]).replace("'", "") + " between nodes " + str(ocd["figlio"]).replace("'", "") + " and " + str(ocd["padre"]).replace("'", "") + " by subject " + ocd["exec"])
-
-
-print("\r\n=== KEY ENCRYPTION SETS ===")
 for asc in lista_asc:
-	print(" • " + str(asc["kes"]).replace("'", "") + " - Key to be given to " + str(asc["sogg"]).replace("'", ""))
+	html_kes += "<li>" + str(asc["kes"]).replace("'", "") + " - Key to be given to " + str(asc["sogg"]).replace("'", "") + "</li>\n"
 
-print("\nEnd of computation\n\n")
+#Salvataggio dei dati nell'html finale
+f_base_html = open('./base_html/index.html',mode='r')
+base_html = f_base_html.read()
+f_base_html.close()
+
+end_html = base_html.replace("{{{nodes}}}", html_albero).replace("{{{n_list}}}", html_ls_nodi).replace("{{{kes}}}", html_kes)
+
+out_html = open("./output/index.html", "w")
+out_html.write(end_html)
+out_html.close()
+
+print("\nOpening output file...")
+os.system("start ./output/index.html")
+print("End of computation\n\n")

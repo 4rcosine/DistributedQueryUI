@@ -1,0 +1,68 @@
+<!doctype html>
+<html>
+<head>
+    <meta charset="utf-8"/>
+    <title></title>
+    <!-- stylesheets -->
+    <link rel="stylesheet" href="Treant.css" type="text/css"/>
+	<!-- javascript -->
+	<script src="vendor/jquery.min.js"></script>
+    <script src="vendor/raphael.js"></script>
+    <script src="Treant.js"></script>
+</head>
+<body>
+	<script>
+	config = {
+		container: "#tree-simple",
+		connectors: {
+			type: "straight"
+		}
+	};
+	
+	node1 = {
+innerHTML : "<p cass='op'><b>Operation:</b><br/>selection (by value) on {P}</p><p class='cand'><b>Candidates:</b> {U, Y}</p><p class='as'><b>Assignee:</b> Y</p><p class='enc'><b>Encryption/Decryption</b><br />Decryption of {P}</p><p class='prof'><b>Profile</b><br/><i>vp</i>: [P, T]&nbsp;&nbsp;&nbsp;&nbsp;<i>ve</i>: []<br/><i>ip</i>: [P, D, T]&nbsp;&nbsp;&nbsp;&nbsp;<i>ie</i>: []<br/><i>eq</i>: [{C, S}]</p>"
+};
+
+node2 = {
+parent: node1,innerHTML : "<p cass='op'><b>Operation:</b><br/>avg on {P}, grouping on {T}</p><p class='cand'><b>Candidates:</b> {H, Y, Z, U, X}</p><p class='as'><b>Assignee:</b> X</p><p class='prof'><b>Profile</b><br/><i>vp</i>: [T]&nbsp;&nbsp;&nbsp;&nbsp;<i>ve</i>: [P]<br/><i>ip</i>: [D, T]&nbsp;&nbsp;&nbsp;&nbsp;<i>ie</i>: []<br/><i>eq</i>: [{C, S}]</p>"
+};
+
+node3 = {
+parent: node2,innerHTML : "<p cass='op'><b>Operation:</b><br/>join on {C, S}</p><p class='cand'><b>Candidates:</b> {H, Y, Z, U, X}</p><p class='as'><b>Assignee:</b> X</p><p class='prof'><b>Profile</b><br/><i>vp</i>: [D, T]&nbsp;&nbsp;&nbsp;&nbsp;<i>ve</i>: [C, S, P]<br/><i>ip</i>: [D]&nbsp;&nbsp;&nbsp;&nbsp;<i>ie</i>: []<br/><i>eq</i>: [{C, S}]</p>"
+};
+
+node4 = {
+parent: node3,innerHTML : "<p cass='op'><b>Operation:</b><br/>selection (by value) on {D}</p><p class='cand'><b>Candidates:</b> {H, Y, Z, U, X, I}</p><p class='as'><b>Assignee:</b> X</p><p class='prof'><b>Profile</b><br/><i>vp</i>: [D, T]&nbsp;&nbsp;&nbsp;&nbsp;<i>ve</i>: [S]<br/><i>ip</i>: [D]&nbsp;&nbsp;&nbsp;&nbsp;<i>ie</i>: []<br/><i>eq</i>: []</p>"
+};
+
+node5 = {
+parent: node4,innerHTML : "<p cass='op'><b>Operation:</b><br/>projection on {S, D, T}</p><p class='as'><b>Assignee:</b> H</p><p class='enc'><b>Encryption/Decryption</b><br />Encryption of {S}</p><p class='prof'><b>Profile</b><br/><i>vp</i>: [D, T]&nbsp;&nbsp;&nbsp;&nbsp;<i>ve</i>: [S]<br/><i>ip</i>: []&nbsp;&nbsp;&nbsp;&nbsp;<i>ie</i>: []<br/><i>eq</i>: []</p>"
+};
+
+node6 = {
+parent: node5,innerHTML : "<p cass='op'><b>Operation:</b><br/>base table Hospital</p><p class='as'><b>Assignee:</b> H</p><p class='prof'><b>Profile</b><br/><i>vp</i>: [B, S, D, T]&nbsp;&nbsp;&nbsp;&nbsp;<i>ve</i>: []<br/><i>ip</i>: []&nbsp;&nbsp;&nbsp;&nbsp;<i>ie</i>: []<br/><i>eq</i>: []</p>"
+};
+
+node7 = {
+parent: node3,innerHTML : "<p cass='op'><b>Operation:</b><br/>base table Insurance</p><p class='as'><b>Assignee:</b> I</p><p class='enc'><b>Encryption/Decryption</b><br />Encryption of {C, P}</p><p class='prof'><b>Profile</b><br/><i>vp</i>: []&nbsp;&nbsp;&nbsp;&nbsp;<i>ve</i>: [C, P]<br/><i>ip</i>: []&nbsp;&nbsp;&nbsp;&nbsp;<i>ie</i>: []<br/><i>eq</i>: []</p>"
+};
+
+
+	
+	
+	ch = [
+		config, node1, node2, node3, node4, node5, node6, node7
+	];
+	</script>
+	<div id="tree-simple" style="width:100%; min-width: 400px; height: auto"> </div>
+    <div class="kes">
+		<b>Key Encryption Sets</b>
+		<ul>
+			<li>{C, S} - Key to be given to {H, I}</li>
+<li>{P} - Key to be given to {Y, I}</li>
+
+		</ul>
+	</div>
+	<script>var my_chart = new Treant(ch);</script>
+</body>
+</html>
