@@ -5,6 +5,7 @@ import json
 import utils
 import sys
 import os
+import platform
 
 #Step 0: Inizializzazione
 lista_tab_json = []
@@ -83,9 +84,14 @@ for i in range(1, qp.get_num_nodi()+1):
 	vp, ve, ip, ie, eq, cand, assegn, operazione, attributi, operandi, dett_op = nodo.get_profilo()
 	html_nodo += "node" + str(i) + " = {\n"
 	html_nodo += "parent: node" + str(nodo.id_padre) + "," if i != 1 else ""
-	html_nodo += "innerHTML : \"<p cass='op'><b>Operation:</b><br/>"
+	html_nodo += "innerHTML : \""
 	
+	for ocd in lista_ocd:
+		if i == ocd["figlio"] and ocd["tipo_op"] == "C":
+			html_nodo += "<div class='box_up'><p class='enc'>Encryption of " + str(ocd["adc"]).replace("'", "") + "</p></div><br/>"
 	
+	html_nodo += "<div class='box_left'><p class='op'><b>Operation:</b><br/>"
+
 	#Parti di output generate in base al tipo di operazione
 	if operazione == "gby":
 		html_nodo += dett_op + " on " + str(operandi).replace("'", "") + ", grouping"
@@ -103,29 +109,18 @@ for i in range(1, qp.get_num_nodi()+1):
 	if operazione != "base" and not qp.is_proj_after_base(i):
 		html_nodo += "<p class='cand'><b>Candidates:</b> " + str(cand).replace("'", "") + "</p>"
 
-	html_nodo += "<p class='as'><b>Assignee:</b> " + assegn + "</p>"
+	html_nodo += "<p class='as'><b>Assignee:</b> " + assegn + "</p></div>"
 
-	#Parti di output generate in base all'eventuale cifratura
-	head_printed = False
-	for ocd in lista_ocd:
-		if i == ocd["figlio"] and ocd["tipo_op"] == "C":
-
-			if not head_printed:
-				html_nodo += "<p class='enc'><b>Encryption/Decryption</b><br />"
-				head_printed = True
-			html_nodo += "Encryption of " + str(ocd["adc"]).replace("'", "") + "</p>"
-
-		if i == ocd["padre"] and ocd["tipo_op"] == "D":
-
-			if not head_printed:
-				html_nodo += "<p class='enc'><b>Encryption/Decryption</b><br />"
-				head_printed = True
-			html_nodo += "Decryption of " + str(ocd["adc"]).replace("'", "") + "</p>"
-
-	html_nodo += "<p class='prof'><b>Profile</b><br/>"
+	
+	html_nodo += "<div class='arrow_left'></div><div class='box_right'><p class='prof'><b>Profile</b><br/>"
 	html_nodo += "<i>vp</i>: " + str(list(vp)).replace("'", "") + "&nbsp;&nbsp;&nbsp;&nbsp;<i>ve</i>: " + str(list(ve)).replace("'", "") + "<br/>"
 	html_nodo += "<i>ip</i>: " + str(list(ip)).replace("'", "") + "&nbsp;&nbsp;&nbsp;&nbsp;<i>ie</i>: " + str(list(ie)).replace("'", "") + "<br/>"
-	html_nodo += "<i>eq</i>: " + str(list(eq)).replace("'", "") + "</p>"
+	html_nodo += "<i>eq</i>: " + str(list(eq)).replace("'", "") + "</p></div>"
+
+	#Parti di output generate in base all'eventuale cifratura
+	for ocd in lista_ocd:
+		if i == ocd["padre"] and ocd["tipo_op"] == "D":
+			html_nodo += "<br/><div class='box_down'><p class='enc'>Decryption of " + str(ocd["adc"]).replace("'", "") + "</p></div>"
 
 	html_nodo += "\"\n};\n\n"
 	html_albero += html_nodo
@@ -145,5 +140,9 @@ out_html.write(end_html)
 out_html.close()
 
 print("\nOpening output file...")
-os.system("start ./output/index.html")
+if platform.system() == "Darwin":
+	os.system("open ./output/index.html")
+else:
+	os.system("start ./output/index.html")
+
 print("End of computation\n\n")
