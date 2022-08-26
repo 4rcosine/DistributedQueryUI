@@ -20,31 +20,31 @@
 	};
 	
 	node1 = {
-innerHTML : "<div class='box_left'><span class='as'>Y</span>, U</div><div class='box_center '><p class='op'>selection on {P}</p></div><div class='arrow_left'></div><div class='cont_right'><div class='box_right'><i>v</i>: T, P<br/><i>i</i>: T, P, D<br/><i>eq</i>: {C, S}</div></div><br/><div class='box_down'><span class='enc'>P</span></div>"
+innerHTML : "<div class='box_left'><span class='as'>Y</span>, U</div><div class='box_center '><p class='op'>selection on {P}</p></div><div class='arrow_left'></div><div class='cont_right'><div class='box_right'><i>v</i>: P, T<br/><i>i</i>: P, T, D<br/><i>eq</i>: {S, C}</div></div><br/><div class='box_down'><span class='enc'>P</span></div>"
 };
 
 node2 = {
-parent: node1,innerHTML : "<div class='box_left'><span class='as'>X</span>, H, Y, Z, U</div><div class='box_center '><p class='op'>avg on {P}, grouping on {T}</p></div><div class='arrow_left'></div><div class='cont_right'><div class='box_right'><i>v</i>: T <span class='enc_att'>P</span><br/><i>i</i>: T, D<br/><i>eq</i>: {C, S}</div></div>"
+parent: node1,innerHTML : "<div class='box_left'><span class='as'>X</span>, H, Y, Z, U</div><div class='box_center '><p class='op'>avg on {P}, grouping on {T}</p></div><div class='arrow_left'></div><div class='cont_right'><div class='box_right'><i>v</i>: T <span class='enc_att'>P</span><br/><i>i</i>: T, D<br/><i>eq</i>: {S, C}</div></div>"
 };
 
 node3 = {
-parent: node2,innerHTML : "<div class='box_left'><span class='as'>X</span>, H, Y, Z, U</div><div class='box_center '><p class='op'>join on {C, S}</p></div><div class='arrow_left'></div><div class='cont_right'><div class='box_right'><i>v</i>: T, D <span class='enc_att'>C, P, S</span><br/><i>i</i>: D<br/><i>eq</i>: {C, S}</div></div>"
+parent: node2,innerHTML : "<div class='box_left'><span class='as'>X</span>, H, Y, Z, U</div><div class='box_center '><p class='op'>join on {S, C}</p></div><div class='arrow_left'></div><div class='cont_right'><div class='box_right'><i>v</i>: T, D <span class='enc_att'>S, P, C</span><br/><i>i</i>: D<br/><i>eq</i>: {S, C}</div></div>"
 };
 
 node4 = {
-parent: node3,innerHTML : "<div class='box_left'><span class='as'>X</span>, H, U, Y, Z, I</div><div class='box_center '><p class='op'>selection on {D}</p></div><div class='arrow_left'></div><div class='cont_right'><div class='box_right'><i>v</i>: T, D <span class='enc_att'>S</span><br/><i>i</i>: D<br/><i>eq</i>: </div></div>"
+parent: node3,innerHTML : "<div class='box_left'><span class='as'>X</span>, H, Y, I, Z, U</div><div class='box_center '><p class='op'>selection on {D}</p></div><div class='arrow_left'></div><div class='cont_right'><div class='box_right'><i>v</i>: T, D <span class='enc_att'>S</span><br/><i>i</i>: D<br/><i>eq</i>: </div></div>"
 };
 
 node5 = {
-parent: node4,innerHTML : "<div class='box_up'><span class='enc'>S</span></div><br/><div class='box_left'><span class='as'>H</span></div><div class='box_center '><p class='op'>projection on {T, S, D}</p></div><div class='arrow_left'></div><div class='cont_right'><div class='box_right'><i>v</i>: T, D <span class='enc_att'>S</span><br/><i>i</i>: <br/><i>eq</i>: </div></div>"
+parent: node4,innerHTML : "<div class='box_up'><span class='enc'>S</span></div><br/><div class='box_left'><span class='as'>H</span></div><div class='box_center '><p class='op'>projection on {S, T, D}</p></div><div class='arrow_left'></div><div class='cont_right'><div class='box_right'><i>v</i>: T, D <span class='enc_att'>S</span><br/><i>i</i>: <br/><i>eq</i>: </div></div>"
 };
 
 node6 = {
-parent: node5,innerHTML : "<div class='box_left'><span class='as'>H</span></div><div class='box_center  leaf'><p class='op'>Hospital (T, B, S, D)</p></div><div class='arrow_left'></div><div class='cont_right'><div class='box_right'><i>v</i>: T, B, S, D<br/><i>i</i>: <br/><i>eq</i>: </div></div>"
+parent: node5,innerHTML : "<div class='box_left'><span class='as'>H</span></div><div class='box_center  leaf'><p class='op'>Hospital (S, T, B, D)</p></div><div class='arrow_left'></div><div class='cont_right'><div class='box_right'><i>v</i>: S, T, B, D<br/><i>i</i>: <br/><i>eq</i>: </div></div>"
 };
 
 node7 = {
-parent: node3,innerHTML : "<div class='box_up'><span class='enc'>C, P</span></div><br/><div class='box_left'><span class='as'>I</span></div><div class='box_center  leaf'><p class='op'>Insurance (C, P)</p></div><div class='arrow_left'></div><div class='cont_right'><div class='box_right'><i>v</i>:  <span class='enc_att'>C, P</span><br/><i>i</i>: <br/><i>eq</i>: </div></div>"
+parent: node3,innerHTML : "<div class='box_up'><span class='enc'>P, C</span></div><br/><div class='box_left'><span class='as'>I</span></div><div class='box_center  leaf'><p class='op'>Insurance (P, C)</p></div><div class='arrow_left'></div><div class='cont_right'><div class='box_right'><i>v</i>:  <span class='enc_att'>P, C</span><br/><i>i</i>: <br/><i>eq</i>: </div></div>"
 };
 
 
@@ -55,13 +55,15 @@ parent: node3,innerHTML : "<div class='box_up'><span class='enc'>C, P</span></di
 	];
 	</script>
 	<div id="tree-simple" style="width:100%; min-width: 400px; height: auto"> </div>
-    <div class="kes">
-		<b>Key Encryption Sets</b>
-		<ul>
-			<li>{C, S} - Key to be given to {H, I}</li>
-<li>{P} - Key to be given to {Y, I}</li>
+	<div class="kes_cont">
+		<span class="kes">
+			<b>Key Encryption Sets</b>
+			<ul>
+				<li>{S, C} - Key to be given to {H, I}</li>
+<li>{P} - Key to be given to {I, Y}</li>
 
-		</ul>
+			</ul>
+		</span>
 	</div>
 	<script>var my_chart = new Treant(ch);</script>
 </body>
