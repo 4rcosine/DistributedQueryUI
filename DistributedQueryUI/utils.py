@@ -1,10 +1,10 @@
 #Modulo delle Utilities (funzioni ad uso comune)
 
 ope_name = {
-		"base" : "base table",
+		"base" : "",
 		"proj" : "projection",
-		"sel_val" : "selection (by value)",
-		"sel_attr" : "selection (by attribute comparison)",
+		"sel_val" : "selection",
+		"sel_attr" : "selection",
 		"join" : "join",
 		"gby" : "aggregation",
 		"rename_p" : "rename",
