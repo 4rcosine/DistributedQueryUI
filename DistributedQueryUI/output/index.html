@@ -20,31 +20,31 @@
 	};
 	
 	node1 = {
-innerHTML : "<div class='box_left'><p class='op'><b>Operation:</b><br/>selection (by value) on {P}</p><p class='cand'><b>Candidates:</b> {U, Y}</p><p class='as'><b>Assignee:</b> Y</p></div><div class='arrow_left'></div><div class='box_right'><p class='prof'><b>Profile</b><br/><i>vp</i>: [P, T]&nbsp;&nbsp;&nbsp;&nbsp;<i>ve</i>: []<br/><i>ip</i>: [D, P, T]&nbsp;&nbsp;&nbsp;&nbsp;<i>ie</i>: []<br/><i>eq</i>: [{C, S}]</p></div><br/><div class='box_down'><p class='enc'>Decryption of {P}</p></div>"
+innerHTML : "<div class='box_left'><b>Y</b>U</div><div class='box_center'><p class='op'>selection (by value) on {P}</p></div><div class='arrow_left'></div><div class='cont_right'><div class='box_right'><i>v</i>: PT<span class='enc_att'></span><br/><i>i</i>: PTD<span class='enc_att'></span><br/><i>eq</i>: {CS}</div></div><br/><div class='box_down'><span class='enc'>P</span></div>"
 };
 
 node2 = {
-parent: node1,innerHTML : "<div class='box_left'><p class='op'><b>Operation:</b><br/>avg on {P}, grouping on {T}</p><p class='cand'><b>Candidates:</b> {X, U, Y, Z, H}</p><p class='as'><b>Assignee:</b> X</p></div><div class='arrow_left'></div><div class='box_right'><p class='prof'><b>Profile</b><br/><i>vp</i>: [T]&nbsp;&nbsp;&nbsp;&nbsp;<i>ve</i>: [P]<br/><i>ip</i>: [D, T]&nbsp;&nbsp;&nbsp;&nbsp;<i>ie</i>: []<br/><i>eq</i>: [{C, S}]</p></div>"
+parent: node1,innerHTML : "<div class='box_left'>U<b>X</b>HYZ</div><div class='box_center'><p class='op'>avg on {P}, grouping on {T}</p></div><div class='arrow_left'></div><div class='cont_right'><div class='box_right'><i>v</i>: T<span class='enc_att'>P</span><br/><i>i</i>: TD<span class='enc_att'></span><br/><i>eq</i>: {CS}</div></div>"
 };
 
 node3 = {
-parent: node2,innerHTML : "<div class='box_left'><p class='op'><b>Operation:</b><br/>join on {C, S}</p><p class='cand'><b>Candidates:</b> {X, U, Y, Z, H}</p><p class='as'><b>Assignee:</b> X</p></div><div class='arrow_left'></div><div class='box_right'><p class='prof'><b>Profile</b><br/><i>vp</i>: [D, T]&nbsp;&nbsp;&nbsp;&nbsp;<i>ve</i>: [C, P, S]<br/><i>ip</i>: [D]&nbsp;&nbsp;&nbsp;&nbsp;<i>ie</i>: []<br/><i>eq</i>: [{C, S}]</p></div>"
+parent: node2,innerHTML : "<div class='box_left'>U<b>X</b>HYZ</div><div class='box_center'><p class='op'>join on {C, S}</p></div><div class='arrow_left'></div><div class='cont_right'><div class='box_right'><i>v</i>: TD<span class='enc_att'>CPS</span><br/><i>i</i>: D<span class='enc_att'></span><br/><i>eq</i>: {CS}</div></div>"
 };
 
 node4 = {
-parent: node3,innerHTML : "<div class='box_left'><p class='op'><b>Operation:</b><br/>selection (by value) on {D}</p><p class='cand'><b>Candidates:</b> {X, U, Y, Z, H, I}</p><p class='as'><b>Assignee:</b> X</p></div><div class='arrow_left'></div><div class='box_right'><p class='prof'><b>Profile</b><br/><i>vp</i>: [D, T]&nbsp;&nbsp;&nbsp;&nbsp;<i>ve</i>: [S]<br/><i>ip</i>: [D]&nbsp;&nbsp;&nbsp;&nbsp;<i>ie</i>: []<br/><i>eq</i>: []</p></div>"
+parent: node3,innerHTML : "<div class='box_left'>U<b>X</b>HIYZ</div><div class='box_center'><p class='op'>selection (by value) on {D}</p></div><div class='arrow_left'></div><div class='cont_right'><div class='box_right'><i>v</i>: TD<span class='enc_att'>S</span><br/><i>i</i>: D<span class='enc_att'></span><br/><i>eq</i>: </div></div>"
 };
 
 node5 = {
-parent: node4,innerHTML : "<div class='box_up'><p class='enc'>Encryption of {S}</p></div><br/><div class='box_left'><p class='op'><b>Operation:</b><br/>projection on {D, S, T}</p><p class='as'><b>Assignee:</b> H</p></div><div class='arrow_left'></div><div class='box_right'><p class='prof'><b>Profile</b><br/><i>vp</i>: [D, T]&nbsp;&nbsp;&nbsp;&nbsp;<i>ve</i>: [S]<br/><i>ip</i>: []&nbsp;&nbsp;&nbsp;&nbsp;<i>ie</i>: []<br/><i>eq</i>: []</p></div>"
+parent: node4,innerHTML : "<div class='box_up'><span class='enc'>S</span></div><br/><div class='box_left'><b>H</b></div><div class='box_center'><p class='op'>projection on {T, S, D}</p></div><div class='arrow_left'></div><div class='cont_right'><div class='box_right'><i>v</i>: TD<span class='enc_att'>S</span><br/><i>i</i>: <span class='enc_att'></span><br/><i>eq</i>: </div></div>"
 };
 
 node6 = {
-parent: node5,innerHTML : "<div class='box_left'><p class='op'><b>Operation:</b><br/>base table Hospital</p><p class='as'><b>Assignee:</b> H</p></div><div class='arrow_left'></div><div class='box_right'><p class='prof'><b>Profile</b><br/><i>vp</i>: [T, D, S, B]&nbsp;&nbsp;&nbsp;&nbsp;<i>ve</i>: []<br/><i>ip</i>: []&nbsp;&nbsp;&nbsp;&nbsp;<i>ie</i>: []<br/><i>eq</i>: []</p></div>"
+parent: node5,innerHTML : "<div class='box_left'><b>H</b></div><div class='box_center'><p class='op'>base table Hospital</p></div><div class='arrow_left'></div><div class='cont_right'><div class='box_right'><i>v</i>: BTSD<span class='enc_att'></span><br/><i>i</i>: <span class='enc_att'></span><br/><i>eq</i>: </div></div>"
 };
 
 node7 = {
-parent: node3,innerHTML : "<div class='box_up'><p class='enc'>Encryption of {C, P}</p></div><br/><div class='box_left'><p class='op'><b>Operation:</b><br/>base table Insurance</p><p class='as'><b>Assignee:</b> I</p></div><div class='arrow_left'></div><div class='box_right'><p class='prof'><b>Profile</b><br/><i>vp</i>: []&nbsp;&nbsp;&nbsp;&nbsp;<i>ve</i>: [C, P]<br/><i>ip</i>: []&nbsp;&nbsp;&nbsp;&nbsp;<i>ie</i>: []<br/><i>eq</i>: []</p></div>"
+parent: node3,innerHTML : "<div class='box_up'><span class='enc'>CP</span></div><br/><div class='box_left'><b>I</b></div><div class='box_center'><p class='op'>base table Insurance</p></div><div class='arrow_left'></div><div class='cont_right'><div class='box_right'><i>v</i>: <span class='enc_att'>CP</span><br/><i>i</i>: <span class='enc_att'></span><br/><i>eq</i>: </div></div>"
 };
 
 
@@ -58,7 +58,7 @@ parent: node3,innerHTML : "<div class='box_up'><p class='enc'>Encryption of {C, 
     <div class="kes">
 		<b>Key Encryption Sets</b>
 		<ul>
-			<li>{C, S} - Key to be given to {H, I}</li>
+			<li>{C, S} - Key to be given to {I, H}</li>
 <li>{P} - Key to be given to {I, Y}</li>
 
 		</ul>

@@ -88,10 +88,18 @@ for i in range(1, qp.get_num_nodi()+1):
 	
 	for ocd in lista_ocd:
 		if i == ocd["figlio"] and ocd["tipo_op"] == "C":
-			html_nodo += "<div class='box_up'><p class='enc'>Encryption of " + str(ocd["adc"]).replace("'", "") + "</p></div><br/>"
+			html_nodo += "<div class='box_up'><span class='enc'>" + "".join(list(ocd["adc"])) + "</span></div><br/>"
 	
-	html_nodo += "<div class='box_left'><p class='op'><b>Operation:</b><br/>"
+	html_nodo += "<div class='box_left'>"
 
+	if operazione != "base" and not qp.is_proj_after_base(i):
+		cand_list =  "".join(list(cand)).replace(assegn, "<b>" + assegn + "</b>")
+		html_nodo += cand_list + "</div>"
+
+	else:
+		html_nodo += "<b>" + assegn + "</b></div>"
+
+	html_nodo += "<div class='box_center'><p class='op'>"
 	#Parti di output generate in base al tipo di operazione
 	if operazione == "gby":
 		html_nodo += dett_op + " on " + str(operandi).replace("'", "") + ", grouping"
@@ -104,23 +112,22 @@ for i in range(1, qp.get_num_nodi()+1):
 	else:
 		html_nodo += " " + names_set[list(operandi)[0]]
 	
-	html_nodo += "</p>"
-
-	if operazione != "base" and not qp.is_proj_after_base(i):
-		html_nodo += "<p class='cand'><b>Candidates:</b> " + str(cand).replace("'", "") + "</p>"
-
-	html_nodo += "<p class='as'><b>Assignee:</b> " + assegn + "</p></div>"
-
+	html_nodo += "</p></div>"
 	
-	html_nodo += "<div class='arrow_left'></div><div class='box_right'><p class='prof'><b>Profile</b><br/>"
-	html_nodo += "<i>vp</i>: " + str(list(vp)).replace("'", "") + "&nbsp;&nbsp;&nbsp;&nbsp;<i>ve</i>: " + str(list(ve)).replace("'", "") + "<br/>"
-	html_nodo += "<i>ip</i>: " + str(list(ip)).replace("'", "") + "&nbsp;&nbsp;&nbsp;&nbsp;<i>ie</i>: " + str(list(ie)).replace("'", "") + "<br/>"
-	html_nodo += "<i>eq</i>: " + str(list(eq)).replace("'", "") + "</p></div>"
+	html_nodo += "<div class='arrow_left'></div><div class='cont_right'><div class='box_right'>"
+	html_nodo += "<i>v</i>: " + "".join(list(vp)) + "<span class='enc_att'>" + "".join(list(ve)) + "</span><br/>"
+	html_nodo += "<i>i</i>: " + "".join(list(ip)) + "<span class='enc_att'>" + "".join(list(ie)) + "</span><br/>"
+	html_nodo += "<i>eq</i>: "
+	tmp_list = []
+	for eq_set in list(eq):
+		tmp_list.append("{" + "".join(eq_set) + "}")
+	html_nodo += ",".join(tmp_list)
+	html_nodo += "</div></div>"
 
 	#Parti di output generate in base all'eventuale cifratura
 	for ocd in lista_ocd:
 		if i == ocd["padre"] and ocd["tipo_op"] == "D":
-			html_nodo += "<br/><div class='box_down'><p class='enc'>Decryption of " + str(ocd["adc"]).replace("'", "") + "</p></div>"
+			html_nodo += "<br/><div class='box_down'><span class='enc'>" + "".join(ocd["adc"]) + "</span></div>"
 
 	html_nodo += "\"\n};\n\n"
 	html_albero += html_nodo
