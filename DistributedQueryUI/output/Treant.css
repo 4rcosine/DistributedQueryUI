@@ -14,7 +14,7 @@ body { font-family: Calibri, Arial, Consolas; }
 .kes_cont { width: 100%; margin-top: 40px; border-top: 3px solid black }
 .kes > ul { list-style-type: none; }
 .kes > ul > li { text-indent: -5px; }
-.kes > ul > li:before{ content: "-"; text-indent: -5px; padding-right: 5px;}
+.kes > ul > li:before { content: "-"; text-indent: -5px; padding-right: 5px;}
 .box_left { font-size: 20px; text-align: right; width: 180px; float: left; height: 83px; line-height: 83px; padding-right: 10px;}
 .box_center { border: 1px solid black; height: 71px; line-height: 61px; padding: 5px; float: left; border-radius: 50%}
 .box_right {  padding: 5px;  height: 71px; float: left; position: relative; border: 1px dotted black; width: auto; left: -6px; padding-left: 10px; padding-right: 10px;}

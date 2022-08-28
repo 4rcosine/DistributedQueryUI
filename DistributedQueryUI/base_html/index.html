@@ -25,9 +25,36 @@
 	ch = [
 		config, {{{n_list}}}
 	];
+	
+	function calcRow() {
+		var nodi = document.getElementsByClassName("node");
+		var minLeft = parseInt(window.getComputedStyle(nodi[0]).left.replace("px", ""))
+		//Trovo il left minimo
+		for(var i = 0; i < nodi.length; i++) {
+			var tmp = parseInt(window.getComputedStyle(nodi[i]).left.replace("px", ""));
+			if (minLeft > tmp){
+				minLeft = tmp;
+			}
+		}
+		
+		//Trovo il left massimo
+		var maxLeft = parseInt(window.getComputedStyle(nodi[0]).left.replace("px", "")) + parseInt(window.getComputedStyle(nodi[0]).width.replace("px", ""));
+		for(var i = 0; i < nodi.length; i++) {
+			var tmp = parseInt(window.getComputedStyle(nodi[i]).left.replace("px", "")) + parseInt(window.getComputedStyle(nodi[i]).width.replace("px", ""));
+			if(maxLeft < tmp) {
+				maxLeft = tmp;
+			}
+		}
+		
+		
+		var larghTree = maxLeft - minLeft;
+		document.getElementById("kes_separator").style.width = larghTree + "px";
+		document.getElementById("kes_separator").style.marginLeft = minLeft + "px";
+	}
+	
 	</script>
 	<div id="tree-simple" style="width:100%; min-width: 400px; height: auto"> </div>
-	<div class="kes_cont">
+	<div class="kes_cont" id="kes_separator">
 		<span class="kes">
 			<b>Key Encryption Sets</b>
 			<ul>
@@ -35,6 +62,9 @@
 			</ul>
 		</span>
 	</div>
-	<script>var my_chart = new Treant(ch);</script>
+	<script>
+	var my_chart = new Treant(ch);
+	calcRow();
+	</script>
 </body>
 </html>
