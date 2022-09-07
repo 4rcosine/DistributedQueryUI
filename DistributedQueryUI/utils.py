@@ -29,35 +29,20 @@ def build_initial_json(lista_tab_json):
 
 		#Per ogni attribuito della tabella...
 		for soggetto in json["permissions"]:
-			
+
 			if not soggetto in subj_json:
 				subj_json[soggetto] = { "p" : [],  "e" : [], "own" : [], "pri" : -1}
 
 			subj_json[soggetto]["p"] = list(set(subj_json[soggetto]["p"] + json["permissions"][soggetto]["plain"]))
 			subj_json[soggetto]["e"] = list(set(subj_json[soggetto]["e"] + json["permissions"][soggetto]["encr"]))
 
-			##Per ogni soggetto che ha autorizzazione in chiaro sull'attributo della tabella...
-			#for subj_plain in json["permissions"][attr]["plain"]:
+		for sj in subj_json:
+			if subj_json[sj]["p"] == [] and subj_json[sj]["e"] == []:
+				subj_json[sj]["p"] = subj_json["any"]["p"]
+				subj_json[sj]["e"] = subj_json["any"]["e"]
+				
+		del subj_json["any"]
 
-			#	#... se il soggetto non è presente in lista lo aggiungo e gli aggiungo anche l'attributo in p
-			#	if not subj_plain in subj_json:
-			#		subj_json[subj_plain] = { "p" : [attr],  "e" : [], "own" : [], "pri" : -1}
-
-			#	#... se il soggetto è presente in lista gli aggiungo l'attributo in p
-			#	else:
-			#		if attr not in subj_json[subj_plain]["p"]:
-			#			subj_json[subj_plain]["p"].append(attr)
-
-			#for subj_enc in json["permissions"][attr]["encr"]:
-			#	#... se il soggetto non è presente in lista lo aggiungo e gli aggiungo anche l'attributo in e
-			#	if not subj_enc in subj_json:
-			#		subj_json[subj_enc] = { "p" : [],  "e" : [attr], "own" : [], "pri" : -1}
-
-			#	#... se il soggetto è presente in lista gli aggiungo l'attributo in e
-			#	else:
-			#		if attr not in subj_json[subj_enc]["e"]:
-			#			subj_json[subj_enc]["e"].append(attr)
-						
 	return subj_json
 
 #Assegnamento priorità a partire dalla mappa

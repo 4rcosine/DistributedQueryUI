@@ -24,13 +24,13 @@
 			"plain" : ["B", "D", "T"],
 			"encr" : ["S"]
 		},
-		
-		"Z" : {
-			"plain" : ["S", "T"],
-			"encr" : ["D"]
+
+		"Z": {
+			"plain": [ "S", "T" ],
+			"encr": [ "D" ]
 		},
 		
-		"a" : {
+		"any" : {
 			"plain" : ["D", "T"],
 			"encr" : []
 		}
