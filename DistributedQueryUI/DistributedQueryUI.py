@@ -65,7 +65,7 @@ qp.set_subj(subj_dict)
 #Eventualmente disegno l'albero
 scelta = ""
 while scelta != "n" and scelta != "y":
-	scelta = input("Do you want to draw the initial query plan tree? [y/n]: ").lower()
+	scelta = input("Do you want to draw the initial query tree plan? [y/n]: ").lower()
 
 	if scelta != "n" and scelta != "y":
 		print("Invalid option.") 
@@ -129,7 +129,7 @@ print("\nEnd of computation\n\n")
 #Eventualmente disegno l'albero
 scelta = ""
 while scelta != "n" and scelta != "y":
-	scelta = input("Do you want to draw the resulting query plan tree? [y/n]: ").lower()
+	scelta = input("Do you want to draw the resulting query tree plan? [y/n]: ").lower()
 
 	if scelta != "n" and scelta != "y":
 		print("Invalid option.") 
