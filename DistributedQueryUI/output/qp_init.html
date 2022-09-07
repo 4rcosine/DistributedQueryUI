@@ -19,11 +19,39 @@
 		}
 	};
 
-	{{{nodes}}}
+	node1 = {
+innerHTML : "<div class='box_center '><p class='op'>selection on {P}</p></div>"
+};
+
+node2 = {
+parent: node1,innerHTML : "<div class='box_center '><p class='op'>avg on {P}, grouping on {T}</p></div>"
+};
+
+node3 = {
+parent: node2,innerHTML : "<div class='box_center '><p class='op'>join on {C, S}</p></div>"
+};
+
+node4 = {
+parent: node3,innerHTML : "<div class='box_center '><p class='op'>selection on {D}</p></div>"
+};
+
+node5 = {
+parent: node4,innerHTML : "<div class='box_center '><p class='op'>projection on {S, T, D}</p></div>"
+};
+
+node6 = {
+parent: node5,innerHTML : "<div class='box_center  leaf'><p class='op'>Hospital (S, T, D, B)</p></div>"
+};
+
+node7 = {
+parent: node3,innerHTML : "<div class='box_center  leaf'><p class='op'>Insurance (C, P)</p></div>"
+};
+
+
 
 
 	ch = [
-		config, {{{n_list}}}
+		config, node1, node2, node3, node4, node5, node6, node7
 	];
 
 	function calcRow() {
@@ -54,7 +82,7 @@
 
 	</script>
 	<div id="tree-simple" style="width:100%; min-width: 400px; height: auto"> </div>
-	{{{kes}}}
+	
 	<script>
 		var my_chart = new Treant(ch);
 		calcRow();
