@@ -170,6 +170,8 @@ class query_plan(object):
 				self.lista_nodi[id].set_attrplain = curr_n.set_attrplain.difference(pseudo).union(real) 
 
 		#Calcolo l'effettivo candidato che eseguirà l'operazione
+		attr_da_cifrare = set()
+
 		if not first_step:
 			self.sistema_set(id)
 			
@@ -189,35 +191,16 @@ class query_plan(object):
 					if sogg in self.lista_nodi[id].candidati:
 						candidato = sogg
 						break
-
-
+				
 				self.lista_nodi[id].assegnatario = candidato #Prendo il soggetto con priorità massima (valore "pri" minimo)
 				auth_cand = self.soggetti[candidato] #Ne leggo le autorizzazioni
 
-				attr_da_cifrare = set()
-
 				#cifrature per sistemare le auth su attributi in chiaro
 				attr_da_cifrare.update((curr_n.profilo["vp"]).difference(auth_cand["p"]))
-
-				#cifrature per sistemare le auth su attributi in insiemi di equivalenza
-				for subset in curr_n.profilo["eq"]:
-					if not subset.issubset(auth_cand["p"]) and not subset.issubset(auth_cand["e"]):
-						#Se la visibilità non è uniforme, cifro gli attributi attualmente in chiaro (e che non sono già da cifrare)
-						attr_da_cifrare.update((subset.difference(auth_cand["e"])).difference(attr_da_cifrare))
-
+				
 				#Effettuo la cifratura vera e propria
 				self.lista_nodi[id].profilo["vp"] = curr_n.profilo["vp"].difference(attr_da_cifrare)
 				self.lista_nodi[id].profilo["ve"] = curr_n.profilo["ve"].union(attr_da_cifrare)
-
-				#Mi segno l'operazione di cifratura che ho iniettato, ricercando il figlio al quale affidarla
-				for figlio in figli:
-					#Prendo gli attributi da cifrare per il figlio come intersezione tra l'insieme degli attributi da cifrare e gli attributi nel Rvp del figlio
-					adc_figlio = self.lista_nodi[figlio].profilo["vp"].intersection(attr_da_cifrare)
-					if len(adc_figlio):
-						self.op_cif_dec.append({ "padre" : id , "figlio" : figlio, "tipo_op" : "C",  "adc" : adc_figlio, "exec" : self.lista_nodi[figlio].assegnatario})
-						#Aggiorno i profili per il nodo figlio (è lui che effettua la cifratura)
-						self.lista_nodi[figlio].profilo["vp"] = self.lista_nodi[figlio].profilo["vp"].difference(adc_figlio)
-						self.lista_nodi[figlio].profilo["ve"] = self.lista_nodi[figlio].profilo["ve"].union(adc_figlio)
 
 
 		#Valutazione degli attributi che bisogna avere per forza decifrati per il nodo
@@ -248,7 +231,7 @@ class query_plan(object):
 			self.lista_nodi[id].profilo["ie"] = curr_n.profilo["ie"].union(curr_n.profilo["ve"].intersection(curr_n.set_attr))
 
 		elif curr_n.tipo_op == "sel_attr":
-		   self.lista_nodi[id].profilo["eq"].append(curr_n.set_attr)       #Qua viene aggiunto un set dentro al set → rappresentare il set di attributi come frozenset o come tupla
+			self.lista_nodi[id].profilo["eq"].append(curr_n.set_attr)       #Qua viene aggiunto un set dentro al set → rappresentare il set di attributi come frozenset o come tupla
 
 		elif curr_n.tipo_op == "join":
 			self.lista_nodi[id].profilo["eq"].append(curr_n.set_attr)       #Discorso analogo per sel_attr
@@ -303,6 +286,34 @@ class query_plan(object):
 				for subj, auth in self.soggetti.items():
 					if curr_n.set_oper.issubset(auth["own"]):
 						self.lista_nodi[id].candidati.add(subj)
+
+		else:
+
+			if curr_n.tipo_op == 'sel_attr' or curr_n.tipo_op == 'join':
+				#cifrature per sistemare le auth su attributi in insiemi di equivalenza
+				auth_cand = self.soggetti[self.lista_nodi[id].assegnatario];
+				for subset in curr_n.profilo["eq"]:
+					if not subset.issubset(auth_cand["p"]) and not subset.issubset(auth_cand["e"]):
+						#Se la visibilità non è uniforme, cifro gli attributi attualmente in chiaro (e che non sono già da cifrare)
+						attr_da_cifrare.update(subset.difference(auth_cand["e"])).difference(attr_da_cifrare)
+
+					elif not subset.issubset(curr_n.profilo["vp"].union(curr_n.profilo["ip"])) and not subset.issubset(curr_n.profilo["ve"].union(curr_n.profilo["ie"])):
+						#Se gli attributi sono in parte già cifrati e in parte no, cifro quelli rimanenti da cifrare
+						attr_da_cifrare.update(subset.difference(curr_n.profilo["ve"].union(curr_n.profilo["ie"])))
+
+				#Effettuo la cifratura vera e propria
+				self.lista_nodi[id].profilo["vp"] = curr_n.profilo["vp"].difference(attr_da_cifrare)
+				self.lista_nodi[id].profilo["ve"] = curr_n.profilo["ve"].union(attr_da_cifrare)
+
+			#Mi segno l'operazione di cifratura che ho iniettato, ricercando il figlio al quale affidarla
+			for figlio in figli:
+				#Prendo gli attributi da cifrare per il figlio come intersezione tra l'insieme degli attributi da cifrare e gli attributi nel Rvp del figlio
+				adc_figlio = self.lista_nodi[figlio].profilo["vp"].intersection(attr_da_cifrare)
+				if len(adc_figlio):
+					self.op_cif_dec.append({ "padre" : id , "figlio" : figlio, "tipo_op" : "C",  "adc" : adc_figlio, "exec" : self.lista_nodi[figlio].assegnatario})
+					#Aggiorno i profili per il nodo figlio (è lui che effettua la cifratura)
+					self.lista_nodi[figlio].profilo["vp"] = self.lista_nodi[figlio].profilo["vp"].difference(adc_figlio)
+					self.lista_nodi[figlio].profilo["ve"] = self.lista_nodi[figlio].profilo["ve"].union(adc_figlio)
 			
 
 	def sistema_set(self, id):
